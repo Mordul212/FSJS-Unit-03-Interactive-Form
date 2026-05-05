@@ -6,6 +6,11 @@ const jobRoleSelection = document.getElementById('title');
 const shirtDesigns = document.getElementById('design'); // not the parent div, but the select element
 const shirtColors = document.getElementById('color'); // not the parent div, but the select element
 const registerFieldset = document.getElementById('activities');
+let totalCost = 0; //initialize to 0
+const paymentSelectionBox = document.getElementById('payment');
+const creditCardDiv = document.getElementById('credit-card');
+const paypalDiv = document.getElementById('paypal');
+const bitcoinDiv = document.getElementById('bitcoin');
 
 //initialize page
 nameField.focus(); // focus on first required text field
@@ -47,10 +52,31 @@ shirtDesigns.addEventListener('change', () => {
 });
 
 registerFieldset.addEventListener('change', (e) => {
+    const activityCost = e.target.dataset.cost;
     if (e.target.checked) {
-        const activityCost = e.target.dataset.cost;
-        const regex = /^Total: \$(\d*)$/;
+        totalCost = totalCost + parseInt(activityCost); // global variable
+        document.getElementById('activities-cost').firstChild.textContent = `Total: $${totalCost}`; 
+    } else {
+        totalCost = totalCost - parseInt(activityCost); // global variable
+        document.getElementById('activities-cost').firstChild.textContent = `Total: $${totalCost}`; 
     }
-        
-
 });
+
+paymentSelectionBox.firstElementChild.nextElementSibling.setAttribute('selected', '');
+paypalDiv.style.display = 'none';
+bitcoinDiv.style.display = 'none';
+paymentSelectionBox.addEventListener('change', (e) => {
+    if (paymentSelectionBox.value === 'credit-card') {
+        creditCardDiv.style.display = 'block';
+        paypalDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'none';
+    } else if (paymentSelectionBox.value === 'paypal') {
+        creditCardDiv.style.display = 'none';
+        paypalDiv.style.display = 'block';
+        bitcoinDiv.style.display = 'none';
+    } else if (paymentSelectionBox.value === 'bitcoin') {
+        creditCardDiv.style.display = 'none';
+        paypalDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'block';
+    }
+}); 
