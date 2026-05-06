@@ -98,7 +98,7 @@ paymentSelectionBox.addEventListener('change', (e) => {
 
 form.addEventListener('submit', (e) => {
     const validateText = /[^\W*]/; // simple word regex - exclude whitespace and special characters
-    const validateEmail = /[^\W*]@[^\W*]\.[^\W*]/; // simple email regex
+    const validateEmail = /[^\W]+@[^\W]+\.[^\W]+/;// simple email regex
     let activityCheckedCount = 0;
 
     errorMessageDisplayCheck(nameField.closest('label'), validateText.test(nameField.value),'name', e); // check required name field
@@ -123,7 +123,7 @@ nameField.addEventListener('keyup', (e) => {
 });
 
 document.getElementById('email').addEventListener('keyup', (e) => {
-    const validateEmail = /[^\W*]@[^\W*]\.[^\W*]/; // simple email regex
+    const validateEmail = /[^\W]+@[^\W]+\.[^\W]+/; // simple email regex
     const partialEmail = /[^@]/;
     if (validateEmail.test(document.getElementById('email').value)) {
         errorMessageDisplayCheck(document.getElementById('email').closest('label'), validateEmail.test(document.getElementById('email').value),'email', e); // check required email field
